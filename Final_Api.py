@@ -31,8 +31,19 @@ def homepage():
     5. EXIT
     """, mimetype="text/plain")
 
+@flask_app.route("/city", methods=["GET"])
+def city():
+    query = "SELECT ID, Name, Country_Code, District"
+    data = fetch_data(query)
+    return make_response(jsonify(data), 200)
 
-
+@flask_app.route("/city/<int:ID>", methods=["GET"])
+def getcityID(ID):
+    query = f"SELECT ID, Name, Country_Code, District WHERE ID = {ID}"
+    data = fetch_data(query)
+    if not data:
+        return jsonify(f"city {ID} does not exist")
+    return make_response(jsonify(data), 200)
 
 #adding city
 @flask_app.route("/city", methods=["POST"])
