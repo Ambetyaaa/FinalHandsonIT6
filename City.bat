@@ -40,8 +40,81 @@ set /p "District=Enter District: "
 
 set "json={\"Name\":\"%Name%\",\"Country_Code  \":\"%Country_Code%\",\"District\":\"%District%\"}
 
-curl -X POST -H "Content-Type: application/json" -d "%json%" http://127.0.0.1:5000/City
-:retrieve
+curl -X POST -H "Content-Type: application/json" -d "%json%" http://127.0.0.1:5000/city
+
+
+rem retrieve
+
+
 :update
+cls
+set /p "UpdateID=Enter city ID: "
+if "%UpdateID%"=="" (
+    echo city ID cannot be empty
+    pause
+    goto update
+)
+set /a ValidUpdateID=%UpdateID%
+if %UpdateID% EQU  ValidUpdateID% (
+    goto Updated
+) else (
+    echo Invalid city ID
+    pause
+    goto update
+)
+:Updated
+curl -X GET http://127.0.0.1:5000/city/%UpdateID%
+echo Continue?
+choice /c yn 
+if %ERRORLEVEL% == 1 goto Updated_details
+if %ERRORLEVEL% == 2 goto update
+
+:Updated_details
+set /p "Name=Enter Name name: "
+set /p "Contry_Code=Enter Country_Code: "
+set /p "District=Enter District: "
+
+set "json={\"Name\":\"%Name%\",\"Country_Code  \":\"%Country_Code%\",\"District\":\"%District%\"}
+
+curl -X POST -H "Content-Type: application/json" -d "%json%" http://127.0.0.1:5000/city
+pause
+cls
+echo Run Again?
+choice /c yn
+if %ERRORLEVEL% == 1 goto update
+if %ERRORLEVEL% == 2 goto main
+
 :delete
+cls
+set /p "DeleteID=Enter city ID: "
+if "%DeleteID%"=="" (
+    echo city ID cannot be empty
+    pause
+    goto delete
+)
+set /a ValidDeleteID=%DeleteID%
+if %DeleteID% EQU %ValidDeleteID% (
+    goto Confirm
+    
+) else (
+    echo Invalid city ID
+    pause
+    goto delete
+)
+:Confirm
+curl -X GET http://127.0.0.1:5000/city/%DeleteID%
+echo Continue?
+choice /c yn 
+if %ERRORLEVEL% == 1 goto DeleteContinue
+if %ERRORLEVEL% == 2 goto delete
+
+:DeleteContinue
+curl -X DELETE http://127.0.0.1:5000/city/%DeleteID%
+pause
+cls
+echo Run Again?s
+choice /c yn
+if %ERRORLEVEL% == 1 goto delete
+if %ERRORLEVEL% == 2 goto main
+
 :end
