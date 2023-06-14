@@ -74,3 +74,13 @@ def city_update(ID):
     mysql.connection.commit()
     cursor.close()
     return make_response(jsonify(f"city {ID} updated successfully"), 201)
+
+#deleting city
+@flask_app.route("/city/<int:ID>", methods=["DELETE"])
+def city_delete(ID):
+    query = f"DELETE FROM city WHERE ID = {ID}"
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    mysql.connection.commit()
+    cursor.close()
+    return make_response(jsonify(f"city {ID} deleted successfully"), 200)
