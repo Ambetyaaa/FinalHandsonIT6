@@ -84,3 +84,6 @@ def city_delete(ID):
     mysql.connection.commit()
     cursor.close()
     return make_response(jsonify(f"city {ID} deleted successfully"), 200)
+
+if __name__ == "__main__":
+    flask_app.run(debug=True)
