@@ -32,3 +32,34 @@ def homepage():
     """, mimetype="text/plain")
 
 
+
+
+#adding city
+@flask_app.route("/city", methods=["POST"])
+def city_add():
+    city = request.get_json()
+    query = f"""
+        INSERT INTO city (Name, Country_Code, District)
+        VALUES ('{city['Name']}', '{city['Country_Code']}', '{city['District']}')
+    """
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    mysql.connection.commit()
+    cursor.close()
+    return make_response(jsonify("city added successfully"), 201)
+
+#updating city
+@flask_app.route("/city/<int:ID>", methods=["PUT"])
+def city_update(ID):
+    city = request.get_json()
+    query = f"""
+        UPDATE city
+        SET Name = '{city['Name']}', Country_Code = '{city['Country_Code']}',
+            District = '{city['District']}'
+        WHERE ID = {ID}
+    """
+    cursor = mysql.connection.cursor()
+    cursor.execute(query)
+    mysql.connection.commit()
+    cursor.close()
+    return make_response(jsonify(f"city {ID} updated successfully"), 201)
