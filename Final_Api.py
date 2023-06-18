@@ -33,13 +33,13 @@ def homepage():
 
 @flask_app.route("/city", methods=["GET"])
 def city():
-    query = "SELECT ID, Name, Country_Code, District"
+    query = "SELECT ID, Name, CountryCode, District FROM city"
     data = fetch_data(query)
     return make_response(jsonify(data), 200)
 
 @flask_app.route("/city/<int:ID>", methods=["GET"])
 def getcityID(ID):
-    query = f"SELECT ID, Name, Country_Code, District WHERE ID = {ID}"
+    query = f"SELECT ID, Name, CountryCode, District FROM city WHERE ID = {ID}"
     data = fetch_data(query)
     if not data:
         return jsonify(f"city {ID} does not exist")
@@ -50,8 +50,8 @@ def getcityID(ID):
 def city_add():
     city = request.get_json()
     query = f"""
-        INSERT INTO city (Name, Country_Code, District)
-        VALUES ('{city['Name']}', '{city['Country_Code']}', '{city['District']}')
+        INSERT INTO city (Name, CountryCode, District)
+        VALUES ('{city['Name']}', '{city['CountryCode']}', '{city['District']}')
     """
     cursor = mysql.connection.cursor()
     cursor.execute(query)
@@ -65,7 +65,7 @@ def city_update(ID):
     city = request.get_json()
     query = f"""
         UPDATE city
-        SET Name = '{city['Name']}', Country_Code = '{city['Country_Code']}',
+        SET Name = '{city['Name']}', CountryCode = '{city['CountryCode']}',
             District = '{city['District']}'
         WHERE ID = {ID}
     """
