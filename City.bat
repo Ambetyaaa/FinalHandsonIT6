@@ -34,7 +34,7 @@ goto end
 
 :add
 cls
-set /p "Name=Enter Name name: "
+set /p "Name=Enter city name: "
 set /p "Contry_Code=Enter Country_Code: "
 set /p "District=Enter District: "
 
@@ -112,7 +112,7 @@ if %ERRORLEVEL% == 2 goto delete
 curl -X DELETE http://127.0.0.1:5000/city/%DeleteID%
 pause
 cls
-echo Run Again?s
+echo you want yo run Again?s
 choice /c yn
 if %ERRORLEVEL% == 1 goto delete
 if %ERRORLEVEL% == 2 goto main
