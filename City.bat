@@ -15,7 +15,7 @@ if %ERRORLEVEL% == 1 (
 )
 if %ERRORLEVEL% == 2 (
 	cls
-	goto retrieve
+	goto reading
 )
 if %ERRORLEVEL% == 3 (
 	cls
@@ -51,8 +51,102 @@ if %ERRORLEVEL% NEQ 0 (
 )
 goto :main
 
+rem View on the table
+:reading
+cls
+echo:
+echo            SELECT 
+echo:
+echo (1) Search a City
+echo (2) Retrieve All city
+echo (3) Back 
+echo:
+choice /c 123 /N 
 
-rem retrieve
+if %ERRORLEVEL% == 1 (
+	goto :Find
+)
+if %ERRORLEVEL% == 2 (
+	goto :View
+)
+
+if %ERRORLEVEL% == 3 (
+	goto :main
+)
+
+rem View all the and choose and format
+:View 
+cls
+
+echo       CHOOSE FORMAT
+
+echo (1) XML
+echo (2) JSON
+echo (3) CANCEL
+
+choice /c 123 /N 
+
+if %ERRORLEVEL% == 1 (
+    cls
+    curl  -X GET http://127.0.0.1:5000/city?format=xml
+    pause
+	goto reading
+)
+if %ERRORLEVEL% == 2 (
+    cls
+    curl  -X GET http://127.0.0.1:5000/city
+    pause
+	goto reading
+)
+if %ERRORLEVEL% == 3 (
+    goto :reading
+)
+
+rem Search a specific ID
+:Find
+cls
+echo:
+echo Enter ID to search
+set /p "search_city=city ID: "
+echo:
+
+if "%search_city%"=="" (
+    echo city ID failed to find, paki ulit na lang po.
+    pause
+    goto Find
+)
+
+rem if the input is valid
+set /a valid_search=%search_city%
+if %search_city% EQU %valid_search% (
+    goto :frmt_srch
+) else (
+    echo Customer ID is Invalid
+)
+
+rem Viewing the search in a format chosen by the user
+:frmt_srch
+cls
+echo       CHOOSE FORMAT
+
+echo (1) XML
+echo (2) JSON
+echo (3) CANCEL
+echo:
+choice /c 123 /N 
+if %ERRORLEVEL% == 1 (
+    curl  -X GET http://127.0.0.1:5000/city/%search_city%?format=xml
+    pause
+	goto reading
+)
+if %ERRORLEVEL% == 2 (
+    curl  -X GET http://127.0.0.1:5000/city/%search_city%
+    pause
+	goto reading
+)
+if %ERRORLEVEL% == 3 (
+    goto :Find
+)
 
 
 :update
