@@ -55,7 +55,7 @@ rem View on the table
 :reading
 cls
 echo:
-echo            SELECT 
+echo        SELECT 
 echo:
 echo (1) Search a City
 echo (2) Retrieve All city
