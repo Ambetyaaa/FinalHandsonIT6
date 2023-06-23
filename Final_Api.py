@@ -45,7 +45,7 @@ def getcityID(ID):
         return jsonify(f"city {ID} does not exist")
     return make_response(jsonify(data), 200)
 
-#adding city
+#Adding city
 @flask_app.route("/city", methods=["POST"])
 def city_add():
     city = request.get_json()
@@ -59,7 +59,7 @@ def city_add():
     cursor.close()
     return make_response(jsonify("city added successfully"), 201)
 
-#updating city
+#Updating city
 @flask_app.route("/city/<int:ID>", methods=["PUT"])
 def city_update(ID):
     city = request.get_json()
@@ -75,7 +75,7 @@ def city_update(ID):
     cursor.close()
     return make_response(jsonify(f"city {ID} updated successfully"), 201)
 
-#deleting city
+#Deleting city
 @flask_app.route("/city/<int:ID>", methods=["DELETE"])
 def city_delete(ID):
     query = f"DELETE FROM city WHERE ID = {ID}"
