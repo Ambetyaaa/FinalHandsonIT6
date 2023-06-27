@@ -35,12 +35,12 @@ goto end
 :add
 cls
 set /p "Name=Enter City Name: "
-set /p "Contry_Code=Enter CountryCode (e.g: PHP, USA, KKK): "
+set /p "Country_Code=Enter CountryCode (e.g: PHP, USA, UK): "
 set /p "District=Enter District: "
 
 
 
-set "json_db={\"Name\":\"%Name%\",\"CountryCode\":\"%CountryCode%\",\"District\":\"%District%\"}"
+set "json_db={\"Name\":\"%Name%\",\"CountryCode\":\"%Country_Code%\",\"District\":\"%District%\"}"
 
 curl --fail -X POST -H "Content-Type: application/json" -d "%json_db%" http://127.0.0.1:5000/city
 
@@ -173,13 +173,13 @@ if %ERRORLEVEL% == 1 goto Updated_details
 if %ERRORLEVEL% == 2 goto update
 
 :Updated_details
-set /p "Name=Enter Name name: "
-set /p "Contry_Code=Enter CountryCode: "
+set /p "Name=Enter City name: "
+set /p "Country_Code=Enter CountryCode: "
 set /p "District=Enter District: "
 
-set "json_db={\"Name\":\"%Name%\",\"CountryCode  \":\"%CountryCode%\",\"District\":\"%District%\"}
+set "json_db={\"Name\":\"%Name%\",\"CountryCode\":\"%Country_Code%\",\"District\":\"%District%\"}"
 
-curl -X POST -H "Content-Type: application/json" -d "%json_db%" http://127.0.0.1:5000/city
+curl --fail -X PUT -H "Content-Type: application/json" -d "%json_db%" http://127.0.0.1:5000/city/%UpdateID%
 pause
 cls
 echo Run Again?
