@@ -221,3 +221,6 @@ if %ERRORLEVEL% == 1 goto delete
 if %ERRORLEVEL% == 2 goto main
 
 :end
+echo Thank you for using this app!
+echo Before you leave, Make sure to close Api window!
+pause
