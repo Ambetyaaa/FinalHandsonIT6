@@ -158,7 +158,7 @@ if "%UpdateID%"=="" (
     goto update
 )
 set /a ValidUpdateID=%UpdateID%
-if %UpdateID% EQU  ValidUpdateID% (
+if %UpdateID% EQU %ValidUpdateID% (
     goto Updated
 ) else (
     echo Invalid city ID
