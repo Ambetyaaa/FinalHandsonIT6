@@ -25,3 +25,5 @@ Dependencies
 3. Check and Change the Config for MySQL Workbench on "Final_Api.py".
 4. To perform CRUD operations on the world_x database. All your interaction is in the "City.bat".
 5. Download and Import "world_x" to your MySQL Workbench.
+
+6. WHEN RUNNING THE TEST, MAKE SURE TO CHANGE THE ID OF CITY IN THE DELETE FUNCTION.
